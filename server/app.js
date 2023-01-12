@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
+const path = require("path");
 
 const dotenv = require("dotenv");
 const cors = require("cors");
@@ -19,7 +20,7 @@ const { db } = require("./models/userModel");
 // app.use(dbConnection());
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "http://localhost:5500",
     credentials: true,
   })
 );
@@ -30,6 +31,11 @@ app.use(cookieParser());
 // app.use("/route", router);
 app.use("/user", userRouter);
 // app.use("/admin", adminRouter);
+
+app.use(express.static("./build/"));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./build/index.html"));
+});
 
 app.use(errorController);
 

@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
+
 const { errorCreator } = require("../utils/responseHandler");
 const { Schema } = mongoose;
+
+mongoose.set("strictQuery", false);
 
 const userSchema = new Schema({
   name: {

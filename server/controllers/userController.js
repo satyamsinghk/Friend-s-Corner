@@ -32,7 +32,10 @@ const loginWithCredentials = async (req, res, next) => {
     if (await verifyPasswordhash(password, pwdHash)) {
       const token = generateToken(userData);
       // console.log(token);
-      res.cookie("token", token, { httpOnly: true, maxAge: 3600 * 1000 });
+      res.cookie("token", token, {
+        httpOnly: true,
+        maxAge: 3600 * 1000,
+      });
       res.status(200);
       res.send(responseCreator(`${username} logged in successfully`, userData));
     } else {
